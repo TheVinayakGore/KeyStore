@@ -1,55 +1,46 @@
-import React from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import React from "react";
+import { Button } from "./ui/button";
 import { FaXTwitter } from "react-icons/fa6";
-import { FiGithub } from "react-icons/fi";
 import { LuLinkedin } from "react-icons/lu";
+import { FiGithub } from "react-icons/fi";
 
 const Footer = () => {
   return (
     <footer className="w-full bg-primary text-white py-10 md:py-20 mt-12 shadow-inner">
-      <div className="container mx-auto flex flex-col items-center justify-center gap-3 px-5">
-        <Link href="/" className="flex items-center gap-3 text-4xl font-bold tracking-tight">
+      <div className="conatiner mx-auto flex flex-col items-center justify-center gap-3 px-5">
+        <Link
+          href="/"
+          className="flex items-center gap-3 text-2xl md:text-4xl font-bold tracking-tight"
+        >
           <Image
             src="/logo.png"
-            alt="KeyStore Logo"
+            alt="logo"
             width={100}
             height={100}
-            className="w-12 h-12"
+            className="size-6 md:size-8"
           />
           KeyStore
         </Link>
-        <p className="text-sm opacity-80 text-center max-w-xl">
+        <p className="text-xs md:text-sm opacity-80 text-center max-w-xl">
           Secure your digital life with KeyStore. End-to-end encrypted,
           cloud-synced, and zero-knowledge password management for peace of
           mind.
         </p>
-        <div className="flex gap-2 my-5">
+        <div className="flex gap-2 my-3 md:my-5">
           <Button variant="ghost" size="icon" asChild>
-            <Link
-              href="https://x.com/keystore"
-              target="_blank"
-              aria-label="X (Twitter)"
-            >
+            <Link href="/" target="_blank" aria-label="X (Twitter)">
               <FaXTwitter className="size-5" />
             </Link>
           </Button>
           <Button variant="ghost" size="icon" asChild>
-            <Link
-              href="https://github.com/keystore"
-              target="_blank"
-              aria-label="GitHub"
-            >
+            <Link href="/" target="_blank" aria-label="GitHub">
               <FiGithub className="size-5" />
             </Link>
           </Button>
           <Button variant="ghost" size="icon" asChild>
-            <Link
-              href="https://linkedin.com/company/keystore"
-              target="_blank"
-              aria-label="LinkedIn"
-            >
+            <Link href="/" target="_blank" aria-label="X (Twitter)">
               <LuLinkedin className="size-5" />
             </Link>
           </Button>

@@ -35,8 +35,8 @@ export async function createPassword(formData: FormData) {
     revalidatePath("/");
     return { success: true };
   } catch (error) {
-    console.error("Error creating password:", error);
-    return { success: false, error: "Failed to create password" };
+    console.error("Error fetching passwords :", error);
+    return { success: false, error: "Failed to create password !" };
   }
 }
 
@@ -49,7 +49,6 @@ export async function updatePassword(id: string, formData: FormData) {
       username: formData.get("username") as string,
       email: formData.get("email") as string,
       url: formData.get("url") as string,
-      password: formData.get("password") as string,
       category: formData.get("category") as string,
       notes: formData.get("notes") as string,
     };
@@ -59,8 +58,8 @@ export async function updatePassword(id: string, formData: FormData) {
     revalidatePath("/");
     return { success: true };
   } catch (error) {
-    console.error("Error updating password:", error);
-    return { success: false, error: "Failed to update password" };
+    console.error("Error updating passwords :", error);
+    return { success: false, error: "Failed to update password !" };
   }
 }
 
@@ -72,7 +71,7 @@ export async function deletePassword(id: string) {
     revalidatePath("/");
     return { success: true };
   } catch (error) {
-    console.error("Error deleting password:", error);
-    return { success: false, error: "Failed to delete password" };
+    console.error("Error deleting passwords :", error);
+    return { success: false, error: "Failed to delete password !" };
   }
 }

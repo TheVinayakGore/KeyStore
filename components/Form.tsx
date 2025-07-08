@@ -1,19 +1,21 @@
 "use client";
+import React, { useState } from "react";
 import { createPassword } from "@/app/actions/password.actions";
 import { useForm } from "react-hook-form";
-import { BsSave2, BsArrowRepeat } from "react-icons/bs";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "./ui/button";
+import { BsArrowRepeat, BsSave2 } from "react-icons/bs";
+import toast from "react-hot-toast";
 
 interface FormData {
   username: string;
@@ -23,7 +25,7 @@ interface FormData {
   notes: string;
 }
 
-export default function Form() {
+const Form = () => {
   const { register, handleSubmit, reset } = useForm<FormData>();
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("");
@@ -36,6 +38,7 @@ export default function Form() {
     });
     formData.append("category", category);
     await createPassword(formData);
+    toast.success("New Credentials Added !");
     setLoading(false);
     reset();
     setCategory("");
@@ -43,114 +46,113 @@ export default function Form() {
 
   return (
     <>
-      <Card id="try-now" className="border-primary/70">
-        <CardHeader>
-          <CardTitle>Add New Credential</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+      <main>
+        <Card id="try-now" className="border-primary/70">
+          <CardHeader>
+            <CardTitle>Add new Credentials</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="username" className="my-2">
+                    Username
+                  </Label>
+                  <Input
+                    id="username"
+                    {...register("username")}
+                    placeholder="username123"
+                    className="p-5"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="email" className="my-2">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    {...register("email")}
+                    placeholder="example@gmail.com"
+                    className="p-5"
+                  />
+                </div>
+              </div>
               <div>
-                <Label htmlFor="username" className="my-2">
-                  Username
+                <Label htmlFor="url" className="my-2">
+                  Website URL
                 </Label>
                 <Input
-                  id="username"
-                  {...register("username")}
-                  placeholder="username123"
+                  id="url"
+                  type="url"
+                  {...register("url")}
+                  placeholder="https://example.com"
                   className="p-5"
                 />
               </div>
               <div>
-                <Label htmlFor="email" className="my-2">
-                  Email
+                <Label htmlFor="password" className="my-2">
+                  Password
                 </Label>
                 <Input
-                  id="email"
-                  type="email"
-                  {...register("email")}
-                  placeholder="user@example.com"
+                  id="password"
+                  type="password"
+                  {...register("password")}
+                  placeholder="https://example.com"
                   className="p-5"
                 />
               </div>
-            </div>
-
-            <div>
-              <Label htmlFor="url" className="my-2">
-                Website URL
-              </Label>
-              <Input
-                id="url"
-                type="url"
-                {...register("url")}
-                placeholder="https://example.com"
-                className="p-5"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="password" className="my-2">
-                Password
-              </Label>
-              <Input
-                id="password"
-                type="password"
-                {...register("password")}
-                placeholder="••••••••"
-                className="p-5"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="category" className="my-2">
-                Category
-              </Label>
-              <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="cursor-pointer w-full">
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="social">Social Media</SelectItem>
-                  <SelectItem value="work">Work</SelectItem>
-                  <SelectItem value="personal">Personal</SelectItem>
-                  <SelectItem value="finance">Finance</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="notes" className="my-2">
-                Notes
-              </Label>
-              <textarea
-                id="notes"
-                {...register("notes")}
-                className="w-full p-2 border rounded-md min-h-[100px]"
-                placeholder="Additional information"
-              />
-            </div>
-
-            <Button
-              type="submit"
-              size="lg"
-              className="bg-primary text-white hover:bg-primary/90 p-6 text-base w-full"
-              disabled={loading}
-            >
-              {loading ? (
-                <>
-                  <BsArrowRepeat className="mr-1.5 size-4 animate-spin" />{" "}
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <BsSave2 className="mr-1.5 size-4" /> Save Credential
-                </>
-              )}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+              <div>
+                <Label htmlFor="category" className="my-2">
+                  Category
+                </Label>
+                <Select value={category} onValueChange={setCategory}>
+                  <SelectTrigger className="cursor-pointer p-5 w-full">
+                    <SelectValue placeholder="Select Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="social">Social Media</SelectItem>
+                    <SelectItem value="Work">Work</SelectItem>
+                    <SelectItem value="personal">Personal</SelectItem>
+                    <SelectItem value="finance">Finance</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="notes" className="my-2">
+                  Notes
+                </Label>
+                <Textarea
+                  id="notes"
+                  {...register("notes")}
+                  className="w-full"
+                  placeholder="Additional Information"
+                />
+              </div>
+              <Button
+                type="submit"
+                size="lg"
+                className="p-6 text-sm md:text-base text-white font-medium w-full"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <BsArrowRepeat className="size-4 mr-1.5 animate-spin" />{" "}
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <BsSave2 className="size-4 mr-1.5" /> Save Credentials
+                  </>
+                )}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </main>
     </>
   );
-}
+};
+
+export default Form;

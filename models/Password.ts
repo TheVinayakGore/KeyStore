@@ -25,7 +25,7 @@ const passwordSchema = new mongoose.Schema(
     category: {
       type: String,
       enum: ["social", "work", "personal", "finance", "other"],
-      default: "other",
+      default: "",
     },
     notes: {
       type: String,

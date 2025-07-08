@@ -1,10 +1,9 @@
-"use client";
+import React, { useState } from "react";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 import { updatePassword } from "@/app/actions/password.actions";
 import { useForm } from "react-hook-form";
-import { FiX, FiEye, FiEyeOff } from "react-icons/fi";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { FiEye, FiEyeOff, FiX } from "react-icons/fi";
 import {
   Select,
   SelectContent,
@@ -12,11 +11,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { useState } from "react";
+import { Textarea } from "./ui/textarea";
+import { Button } from "./ui/button";
 import { MdOutlineUpdate } from "react-icons/md";
+import toast from "react-hot-toast";
 
 interface Password {
   _id: string;
+  title: string;
   username?: string;
   email?: string;
   url?: string;
@@ -34,13 +36,13 @@ interface FormData {
   notes: string;
 }
 
-export default function EditForm({
+const EditForm = ({
   password,
   onCancel,
 }: {
   password: Password;
   onCancel: () => void;
-}) {
+}) => {
   const { register, handleSubmit } = useForm<FormData>({
     defaultValues: {
       username: password.username || "",
@@ -63,6 +65,7 @@ export default function EditForm({
       formData.append("category", data.category);
     }
     await updatePassword(password._id, formData);
+    toast.success("Credentials Updated !");
     onCancel();
   };
 
@@ -103,7 +106,7 @@ export default function EditForm({
           <button
             type="button"
             onClick={() => setShowPassword((v) => !v)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-800 cursor-pointer"
             tabIndex={-1}
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
@@ -121,11 +124,11 @@ export default function EditForm({
           defaultValue={password.category || ""}
         >
           <SelectTrigger className="cursor-pointer w-full">
-            <SelectValue placeholder="Select category" />
+            <SelectValue placeholder="Select Category" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="social">Social Media</SelectItem>
-            <SelectItem value="work">Work</SelectItem>
+            <SelectItem value="Work">Work</SelectItem>
             <SelectItem value="personal">Personal</SelectItem>
             <SelectItem value="finance">Finance</SelectItem>
             <SelectItem value="other">Other</SelectItem>
@@ -134,28 +137,32 @@ export default function EditForm({
       </div>
 
       <div>
-        <Label htmlFor="notes" className="my-3">
+        <Label htmlFor="url" className="my-3">
           Notes
         </Label>
-        <textarea
+        <Textarea
           id="notes"
           {...register("notes")}
-          className="w-full p-2 border rounded-md min-h-[100px]"
+          className="w-full"
+          placeholder="Additional Information"
         />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <Button type="submit" className="flex-1 p-6 text-base">
-          <MdOutlineUpdate className="mr-2 size-6" /> Update Changes
+        <Button type="submit" className="flex-1 p-6 text-base text-white">
+          <MdOutlineUpdate className="mr-2 size-6" /> Update Chnages
         </Button>
         <Button
           variant="outline"
           onClick={onCancel}
+          type="button"
           className="flex-1 p-6 text-base"
         >
-          <FiX className="mr-2 size-5" /> Cancel
+          <FiX className="mr-2 size-6" /> Cancel
         </Button>
       </div>
     </form>
   );
-}
+};
+
+export default EditForm;
