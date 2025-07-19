@@ -98,7 +98,7 @@ const Form = () => {
                   id="password"
                   type="password"
                   {...register("password")}
-                  placeholder="https://example.com"
+                  placeholder="whf76WQ4WQWBF494"
                   className="p-5"
                 />
               </div>
